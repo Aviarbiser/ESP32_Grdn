@@ -1,0 +1,23 @@
+
+<<<<<<< HEAD
+if tbox is restarting 
+
+æ
+=======
+* UPDATE locationPV from TBox after WAKEUP to prvent homeing
+* if motor stop >5% befor 0 or <95% befor 100 error in location need to do homeing
+* if motor stop <5% or >95% then set location to 0 or 100 %
+
+>>>>>>> branch 'master' of https://github.com/Aviarbiser/ESP32_Blind.git
+
+
+fix from 16/1/2020
+Protaction from multiplay command in movment (Homming,go_to position ...)
+VoltageErrorCheck -> Alarm timer fixed
+calc SPA only if in E_S_OFFLINE 
+motor_status =E_S_OFFLINE if communication not ok
+error status (movment)
+ adding use of memory
+ OTA check if PositionIndex <= LastPositionIndex and  LastPositionIndex == 0 then return error 6
+ Handshake for communication function
+ 

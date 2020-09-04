@@ -1,0 +1,525 @@
+<html>
+<head>
+    <title>Arbicom Shutter</title>
+<meta charset="UTF-8">
+<meta id="viewport" content="width=device-width; initial-scale=1.0">
+   <!-- <script type="text/javascript" src="jquery-1.10.2.min.js"></script> -->
+
+<style>
+body{padding-left:5%;padding-right:5%;}
+div.main{display:block;}
+
+div.status_div{
+ margin-top: 1em;
+        margin-bottom: 1em;
+}
+
+    div.Alarmlimt {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+    div.times {
+        margin-top: 1em;
+        margin-bottom: 1em;		
+    }
+    div.times td {
+		border: 1px solid black;
+		width: 10px;
+    }
+	div.times input {
+		width: 100px;
+		text-align: center;
+    }
+
+    div.Alarmlimt {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+    div.submitdiv {
+        position:absolute;
+        left:500;
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+
+</style>
+<script>
+
+	function save_wifi_settings()
+	{
+		
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function () {
+            if ((this.readyState == XMLHttpRequest.DONE) && (xmlhttp.status == 200)) {
+               
+			}
+			
+        };
+		
+		xmlhttp.open("POST", "/wifi_setting", true);
+		var ob = document.getElementById('ssid');
+		xmlhttp.setRequestHeader('ssid', ob.value);
+		ob = document.getElementById('password');
+		xmlhttp.setRequestHeader('password', ob.value);
+		xmlhttp.send();
+	
+
+	
+	}
+	
+	
+	
+	function OS_Update()
+	{
+	debugger;
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function () {
+            if ((this.readyState == XMLHttpRequest.DONE) && (xmlhttp.status == 200)) {
+               
+			}
+			
+        };
+		xmlhttp.open("POST", "/os_update", true);
+		xmlhttp.send();
+	}
+	
+	
+
+	function wifi_start_sta()
+	{
+	debugger;
+
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function () {
+            if ((this.readyState == XMLHttpRequest.DONE) && (xmlhttp.status == 200)) {
+               
+			}
+			
+        };
+		xmlhttp.open("POST", "/wifi_sta_start", true);
+		xmlhttp.send();
+	}
+	
+    function sendRequest(params) {
+        var xmlhttp = new XMLHttpRequest();
+		//debugger;
+        xmlhttp.onreadystatechange = function () {
+            if ((this.readyState == XMLHttpRequest.DONE) && (xmlhttp.status == 200)) {
+                html = "";
+                var o = JSON.parse(this.responseText);
+				//get status	
+                for (var r in o.status) {
+                    var oid = r;
+					var val;
+					if(oid == "WIFI_IP"){
+						val = o.status[oid];
+					}
+					else{
+						val = parseInt(o.status[oid]);
+					}
+                    var ob = document.getElementById(oid);
+					if(ob != null){
+						if (ob.type == "text") {
+							ob.text = val;
+						}
+						else {
+							ob.innerHTML = val;
+						}
+					}
+                }
+             
+			}
+			
+        };
+		
+		var query = null;
+		if(params != 'null')
+		{
+			
+			query = params ;
+			
+		}
+
+		xmlhttp.open("POST", "/param_ajax", true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send(query);
+
+        
+    }
+
+
+    function updateState() {
+        setTimeout(updateState, 5000);
+
+       // sendRequest('null');
+    }
+	
+	function leftFillNum(num, targetLength) {
+    	return num.toString().padStart(targetLength, 0);
+	}
+	
+    function updateOnOpen() {
+	//debugger;
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				// Action to be performed when the document is read;
+			//	debugger;
+				var o = JSON.parse(this.responseText);
+				//get status	
+                for (var r in o.status) {
+                    var oid = r;
+					var val;
+
+					if(oid == "WIFI_IP"){
+						val = o.status[oid];
+					}
+					else if(oid == "Clock"){
+						//var d = new Date(parseInt(o.status[oid]));
+						val = o.status[oid]; 
+					}
+					else{
+						val = parseInt(o.status[oid]);
+					}
+                    var ob = document.getElementById(oid);
+					if(ob != null){
+						if (ob.type == "text") {
+							ob.text = val;
+						}
+						else {
+							ob.innerHTML = val;
+						}
+					}
+                }
+				//get hours	
+                for (var r in o.hours) {
+                    var oid = r;
+                    var val = parseInt(o.hours[oid]);
+                    var ob = document.getElementById(oid);
+					if(ob != null){
+						if (ob.type == "text") {
+							if(ob.id.includes("StartHour")){
+								//convert nnumber (0-1440) to hh:mm
+								var h = leftFillNum(parseInt((val / 60)),2); 
+								var m = leftFillNum(parseInt((val % 60)),2); 
+								ob.value = h +':' + m;
+							}
+							else
+							{
+								ob.value = val;
+							}
+						}
+						else {
+							ob.innerHTML = val;
+						}
+					}
+                }
+				
+			}
+		};
+		xhttp.open("POST", "/ajax", true);
+		xhttp.send();
+		updateState();
+
+
+    }
+
+    function sendForm(e) {
+      //  e.preventDefault();
+debugger;
+        var postData = '{';
+
+        //var elems = document.body.getElementsByTagName("*");
+			var theForm = document.body.getElementsByTagName("*");
+		
+		var val;
+
+        for (var i = 0; i < theForm.length; i++){
+            if (theForm[i].type == 'text')
+			{
+				if (theForm[i].value == "") val = 0;
+				else
+				{
+					if(theForm[i].id.includes("StartHour")){
+						//convert nnumber (0-1440) to hh:mm
+						var res = theForm[i].value.split(":");
+						var h = res[0]; 
+						var m = res[1]; 
+						val = parseInt(parseInt(h) * 60  + parseInt(m));
+					}
+					else
+					{
+						var n = Number(theForm[i].value);
+						if (isNaN(n))
+						{
+							n = 0;
+						}
+					 	val = n;
+				 	}
+				}
+				if ((theForm[i].id == 'ssid')|| (theForm[i].id == 'password')){
+					//postData += '"' + theForm[i].id + '":"' + val + '",';
+				}
+				else{
+					postData += '"' + theForm[i].id + '":' + val + ',';
+				}
+                
+				
+			}
+		}
+		var d = new Date();
+		postData += '"time_y":' + d.getFullYear() + ',';
+		postData += '"time_m":' + d.getMonth()  + ',';
+		postData += '"time_d":' + d.getDate() + ',';
+		postData += '"time_h":' + d.getHours() + ',';
+		postData += '"time_mm":' + d.getMinutes() + ',';
+		postData += '"time_s":' + d.getSeconds() + '}';
+		//debugger;
+        sendRequest(postData);
+        //switchTo = 'hreg';
+
+        return false;
+    }
+
+
+
+
+</script>
+</head>
+<body>
+
+<div class="main" id="maindiv" >
+    <div style="text-align:center;position:center; font-size:28; padding-left:5%;padding-right:5%">
+        <label >Garden guard</label>
+    </div>
+		
+  
+    <form id="main" id="main" >
+    
+    	<div class="Status">
+            <table>
+            </tr>
+            <tr>
+            	<td  width="100"><label>CPU Clock</label></label></td>
+				<td colspan="8" width="10"><label id="Clock" ></label></td>
+				<td width="200"></td>
+            </tr>
+             <tr>
+            	<td colspan="2" ><label>Version</label></label>
+				<label id="Device_version" ></label></td>
+				<td  colspan="2"><label>Sub Version</label></label>
+				<td ><label id="SUB_version" ></label></td>
+            </tr>
+            </table>
+        </div>
+        
+        <div class="times">
+        
+            <table  >
+            <tr width="10">
+            <th />
+            <th width="10"><label width="10">Sunday</label></th>
+            <th width="10"><label size="10">Monday</label> </th>
+            <th><label>Tuesday</label></th>
+            <th><label>Wednesday</label> </th>
+            <th><label>Thursday</label></th>
+            <th><label>Friday</label> </th>
+			<th><label>Saturday</label> </th>
+            </tr>
+            <tr >
+				<td height="45" colspan="8" ><b><label >Times for valve 1</label></b> </td>
+			</tr>
+            <tr >
+				<td ><label style = "width:100;" >Start Hour 1</label> </td>
+				<td ><label><input  size="10"  id="StartHour1_1_1" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour1_1_2" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour1_1_3" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour1_1_4" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour1_1_5" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour1_1_6" type="text" value="XXX" /></label></label></td>
+				<td ><label><input  size="10"  id="StartHour1_1_7" type="text" value="XXX" /></label></label></td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Duration 1</label> </td>
+				<td ><input  size="10"  id="Duration1_1_1" type="text" value="XXX" /></input></td>	
+				<td ><input  size="10"  id="Duration1_1_2" type="text" value="XXX" /></input> </td>	
+				<td ><input  size="10"  id="Duration1_1_3" type="text" value="XXX" /></input></td>	
+				<td ><input  size="10"  id="Duration1_1_4" type="text" value="XXX" /></input> </td>	
+				<td ><input  size="10"  id="Duration1_1_5" type="text" value="XXX" /></input></td>	
+				<td ><input  size="10"  id="Duration1_1_6" type="text" value="XXX" /></label> </td>	
+				<td ><input  size="10"  id="Duration1_1_7" type="text" value="XXX" /></label> </td>	
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Start Hour 2</label> </td>
+				<td ><input  size="10"  id="StartHour1_2_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour1_2_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour1_2_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour1_2_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour1_2_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour1_2_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="StartHour1_2_7" type="text" value="XXX" /></label> </td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Duration 2</label> </td>
+				<td ><input  size="10"  id="Duration1_2_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration1_2_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration1_2_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration1_2_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration1_2_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration1_2_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="Duration1_2_7" type="text" value="XXX" /></label> </td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Start Hour 3</label> </td>
+				<td ><input  size="10"  id="StartHour1_3_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour1_3_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour1_3_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour1_3_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour1_3_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour1_3_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="StartHour1_3_7" type="text" value="XXX" /></label> </td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Duration 3</label> </td>
+				<td ><input  size="10"  id="Duration1_3_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration1_3_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration1_3_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration1_3_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration1_3_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration1_3_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="Duration1_3_7" type="text" value="XXX" /></label> </td>
+            </tr>
+			<tr >
+				<td height="45" colspan="8" ><b><label >Times for valve 2</label></b> </td>
+			</tr>
+            <tr >
+				<td ><label style = "width:100;" >Start Hour 1</label> </td>
+				<td ><label><input  size="10"  id="StartHour2_1_1" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour2_1_2" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour2_1_3" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour2_1_4" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour2_1_5" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour2_1_6" type="text" value="XXX" /></label></label></td>
+				<td ><label><input  size="10"  id="StartHour2_1_7" type="text" value="XXX" /></label></label></td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Duration 1</label> </td>
+				<td ><input  size="10"  id="Duration2_1_1" type="text" value="XXX" /></input></td>	
+				<td ><input  size="10"  id="Duration2_1_2" type="text" value="XXX" /></input> </td>	
+				<td ><input  size="10"  id="Duration2_1_3" type="text" value="XXX" /></input></td>	
+				<td ><input  size="10"  id="Duration2_1_4" type="text" value="XXX" /></input> </td>	
+				<td ><input  size="10"  id="Duration2_1_5" type="text" value="XXX" /></input></td>	
+				<td ><input  size="10"  id="Duration2_1_6" type="text" value="XXX" /></label> </td>	
+				<td ><input  size="10"  id="Duration2_1_7" type="text" value="XXX" /></label> </td>	
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Start Hour 2</label> </td>
+				<td ><input  size="10"  id="StartHour2_2_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour2_2_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour2_2_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour2_2_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour2_2_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour2_2_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="StartHour2_2_7" type="text" value="XXX" /></label> </td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Duration 2</label> </td>
+				<td ><input  size="10"  id="Duration2_2_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration2_2_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration2_2_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration2_2_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration2_2_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration2_2_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="Duration2_2_7" type="text" value="XXX" /></label> </td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Start Hour 3</label> </td>
+				<td ><input  size="10"  id="StartHour2_3_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour2_3_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour2_3_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour2_3_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour2_3_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour2_3_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="StartHour2_3_7" type="text" value="XXX" /></label> </td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Duration 3</label> </td>
+				<td ><input  size="10"  id="Duration2_3_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration2_3_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration2_3_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration2_3_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration2_3_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration2_3_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="Duration2_3_7" type="text" value="XXX" /></label> </td>
+            </tr>            
+            
+            
+            
+            <tr>
+				<td colspan="8" height="30">
+					<input class="zsubmit" type="button" value="Save" onclick="sendForm('event')" />
+				</td>
+			</tr>
+            </table>
+        </div>
+
+ 
+        
+        <div class="WIFISetting">
+            <table>
+            <tr>
+            <th colspan="1">
+            <label>WIFI Settings</label>
+            </th>
+            </tr>
+            <tr>
+				<td><label for="ssid">SSID</label></td>
+				<td ><input id=ssid /></td>
+				<td width="200"></td>
+            </tr>
+            <tr>
+				<td><label for="password">Password</label></td>
+				<td ><input id=password /></td>
+				
+				<td width="130"></td>
+				<td width="10"><input class="OS_update" type="button" onclick="OS_Update()" value="Check for update" /></td>
+            </tr>
+			<tr>
+				<td width="10"><input class="OS_update" type="button" onclick="save_wifi_settings()" value="Save WIFI" /></td>
+				<td width="10"><input class="start_wifi" type="button" onclick="wifi_start_sta()" value="connect to wifi AP" /></td>
+			</tr>
+			
+			<tr> <td> </td></tr>
+			
+			<tr>
+				<td width="100"> <label for="WIFI_IP">IP</label></td>
+				<td width="10"><label id=WIFI_IP>XXX</label></td>
+				
+			</tr>
+			
+			<tr>
+				<td width="100"> <label for="WIFI_Signal">Signal</label></td>
+				<td width="10"><label id=WIFI_Signal>XXX</label></td>
+			
+			</tr>
+            </table>
+        </div>
+		
+		<div>
+		
+		
+		</div>
+        
+    </form>
+</div>
+<script>
+
+	window.onload = function(e){ 
+	updateOnOpen();
+   //alert(1);
+}
+
+</script>
+</body>
+</html>
