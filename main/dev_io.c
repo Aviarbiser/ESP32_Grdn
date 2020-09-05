@@ -3,6 +3,8 @@
 #include "driver/adc.h"
 #include "protocol.h"
 #include "dev_logic.h"
+#include "driver/i2c.h"
+
 
 
 #define ESP_INTR_FLAG_DEFAULT 0
@@ -11,6 +13,8 @@ bool dev_direction = 0;
 uint16_t Device_Volt;
 int io_val ;
 uint8_t io_dig_mode = 0; //0 = ESp 1 = Server
+float si7021_temperature;
+float si7021_humidity;
 
 
 //interapt function for pulse input (speed)
@@ -109,6 +113,8 @@ void IO_init()
 	//hook isr handler for specific gpio pin
 	gpio_isr_handler_add(DEV_PULSE_PIN, pulse_isr_handler, (void*) DEV_PULSE_PIN);
 
+
+
 	//set Brake in driver to high by default
 	//WriteToDigital(DEV_BRAKE_PIN,1);
 	//WriteToDigital(OUT_LED_R_PIN,1);
@@ -169,6 +175,7 @@ void IO_loop()
 		//	printf("ADC2 used by Wi-Fi.\n");
 		//}
 		io_val = (gpio_get_level(IN1_PIN) & 1) | ((gpio_get_level(IN2_PIN) & 1) << 1) | ((gpio_get_level(IN3_PIN) & 1) << 2);
+
 
 
 	}

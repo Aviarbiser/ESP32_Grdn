@@ -93,7 +93,11 @@ dev_io.o: \
  C:/msys32/home/AviahiArbiser/esp/esp-idf/components/driver/include/driver/adc.h \
  C:/msys32/home/AviahiArbiser/esp/esp-idf/components/soc/include/soc/adc_periph.h \
  C:/msys32/home/AviahiArbiser/esp/esp-idf/components/soc/esp32/include/soc/adc_channel.h \
- C:/msys32/home/AviahiArbiser/esp/esp32_Grdn/ESP32_Grdn/main/protocol.h
+ C:/msys32/home/AviahiArbiser/esp/esp32_Grdn/ESP32_Grdn/main/protocol.h \
+ C:/msys32/home/AviahiArbiser/esp/esp-idf/components/driver/include/driver/i2c.h \
+ C:/msys32/home/AviahiArbiser/esp/esp-idf/components/freertos/include/freertos/semphr.h \
+ C:/msys32/home/AviahiArbiser/esp/esp-idf/components/freertos/include/freertos/queue.h \
+ C:/msys32/home/AviahiArbiser/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h
 
 C:/msys32/home/AviahiArbiser/esp/esp32_Grdn/ESP32_Grdn/main/dev_io.h:
 
@@ -282,4 +286,12 @@ C:/msys32/home/AviahiArbiser/esp/esp-idf/components/soc/include/soc/adc_periph.h
 C:/msys32/home/AviahiArbiser/esp/esp-idf/components/soc/esp32/include/soc/adc_channel.h:
 
 C:/msys32/home/AviahiArbiser/esp/esp32_Grdn/ESP32_Grdn/main/protocol.h:
+
+C:/msys32/home/AviahiArbiser/esp/esp-idf/components/driver/include/driver/i2c.h:
+
+C:/msys32/home/AviahiArbiser/esp/esp-idf/components/freertos/include/freertos/semphr.h:
+
+C:/msys32/home/AviahiArbiser/esp/esp-idf/components/freertos/include/freertos/queue.h:
+
+C:/msys32/home/AviahiArbiser/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h:
 /home/AviahiArbiser/esp/esp32_Grdn/ESP32_Grdn/main/./dev_io.c:

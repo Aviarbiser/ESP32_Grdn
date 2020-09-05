@@ -21,6 +21,7 @@
 #include "sdkconfig.h"
 #include "dev_logic.h"
 
+
 //analog
 #define DEV_VREFF_OUT_CH 1 //DAC channel 1 is GPIO25
 
@@ -48,6 +49,9 @@
 #define OUT_R2_PIN 2 //CMD (19)
 #define OUT_LED_R_PIN 32
 #define OUT_LED_G_PIN 26
+
+#define SDA_PIN 21
+#define SCL_PIN 22
 
 //#define SW1_PIN 0 //
 //#define SW2_PIN 0 //EN
@@ -78,6 +82,8 @@ volatile int16_t speed_count;
 extern uint16_t Device_Volt;
 extern uint8_t io_dig_mode;
 
+extern float si7021_temperature;
+extern float si7021_humidity;
 
 extern int io_val ;
 extern bool dev_direction;
