@@ -280,6 +280,35 @@ void save_parmdata(char * buf,int recive_count)
 			sprintf(objName,"Duration2_3_%d",(i+1));
 			valve_parm[1].hour_parm[i].Duration3 = cJSON_GetObjectItem(root, objName)->valueint;
 
+			//valve 3
+			sprintf(objName,"StartHour3_1_%d",(i+1));
+			valve_parm[2].hour_parm[i].StartHour1 = cJSON_GetObjectItem(root, objName)->valueint;
+			sprintf(objName,"StartHour3_2_%d",(i+1));
+			valve_parm[2].hour_parm[i].StartHour2 = cJSON_GetObjectItem(root, objName)->valueint;
+			sprintf(objName,"StartHour3_3_%d",(i+1));
+			valve_parm[2].hour_parm[i].StartHour3 = cJSON_GetObjectItem(root, objName)->valueint;
+
+			sprintf(objName,"Duration3_1_%d",(i+1));
+			valve_parm[2].hour_parm[i].Duration1 = cJSON_GetObjectItem(root, objName)->valueint;
+			sprintf(objName,"Duration3_2_%d",(i+1));
+			valve_parm[2].hour_parm[i].Duration2 = cJSON_GetObjectItem(root, objName)->valueint;
+			sprintf(objName,"Duration3_3_%d",(i+1));
+			valve_parm[2].hour_parm[i].Duration3 = cJSON_GetObjectItem(root, objName)->valueint;
+
+			//valve 4
+			sprintf(objName,"StartHour4_1_%d",(i+1));
+			valve_parm[3].hour_parm[i].StartHour1 = cJSON_GetObjectItem(root, objName)->valueint;
+			sprintf(objName,"StartHour4_2_%d",(i+1));
+			valve_parm[3].hour_parm[i].StartHour2 = cJSON_GetObjectItem(root, objName)->valueint;
+			sprintf(objName,"StartHour4_3_%d",(i+1));
+			valve_parm[3].hour_parm[i].StartHour3 = cJSON_GetObjectItem(root, objName)->valueint;
+
+			sprintf(objName,"Duration4_1_%d",(i+1));
+			valve_parm[3].hour_parm[i].Duration1 = cJSON_GetObjectItem(root, objName)->valueint;
+			sprintf(objName,"Duration4_2_%d",(i+1));
+			valve_parm[3].hour_parm[i].Duration2 = cJSON_GetObjectItem(root, objName)->valueint;
+			sprintf(objName,"Duration4_3_%d",(i+1));
+			valve_parm[3].hour_parm[i].Duration3 = cJSON_GetObjectItem(root, objName)->valueint;
 
 		}
 		SaveHoursToMemory();
@@ -424,6 +453,32 @@ static esp_err_t param_ajax_handler(httpd_req_t *req)
 		cJSON_AddNumberToObject(hur,objName,valve_parm[1].hour_parm[i].Duration2);
 		sprintf(objName,"Duration2_3_%d",(i+1));
 		cJSON_AddNumberToObject(hur,objName,valve_parm[1].hour_parm[i].Duration3);
+		//hours for valve 3
+		sprintf(objName,"StartHour3_1_%d",(i+1));
+		cJSON_AddNumberToObject(hur,objName,valve_parm[2].hour_parm[i].StartHour1);
+		sprintf(objName,"StartHour3_2_%d",(i+1));
+		cJSON_AddNumberToObject(hur,objName,valve_parm[2].hour_parm[i].StartHour2);
+		sprintf(objName,"StartHour3_3_%d",(i+1));
+		cJSON_AddNumberToObject(hur,objName,valve_parm[2].hour_parm[i].StartHour3);
+		sprintf(objName,"Duration3_1_%d",(i+1));
+		cJSON_AddNumberToObject(hur,objName,valve_parm[2].hour_parm[i].Duration1);
+		sprintf(objName,"Duration3_2_%d",(i+1));
+		cJSON_AddNumberToObject(hur,objName,valve_parm[2].hour_parm[i].Duration2);
+		sprintf(objName,"Duration3_3_%d",(i+1));
+		cJSON_AddNumberToObject(hur,objName,valve_parm[2].hour_parm[i].Duration3);
+		//hours for valve 4
+		sprintf(objName,"StartHour4_1_%d",(i+1));
+		cJSON_AddNumberToObject(hur,objName,valve_parm[4].hour_parm[i].StartHour1);
+		sprintf(objName,"StartHour4_2_%d",(i+1));
+		cJSON_AddNumberToObject(hur,objName,valve_parm[4].hour_parm[i].StartHour2);
+		sprintf(objName,"StartHour4_3_%d",(i+1));
+		cJSON_AddNumberToObject(hur,objName,valve_parm[4].hour_parm[i].StartHour3);
+		sprintf(objName,"Duration4_1_%d",(i+1));
+		cJSON_AddNumberToObject(hur,objName,valve_parm[4].hour_parm[i].Duration1);
+		sprintf(objName,"Duration4_2_%d",(i+1));
+		cJSON_AddNumberToObject(hur,objName,valve_parm[4].hour_parm[i].Duration2);
+		sprintf(objName,"Duration4_3_%d",(i+1));
+		cJSON_AddNumberToObject(hur,objName,valve_parm[4].hour_parm[i].Duration3);
 	}
 
 
@@ -561,7 +616,7 @@ int download_os_update_list(char * os_path)
 	{
 		printf("root != NULL \n");
 
-		cJSON* r = cJSON_GetObjectItem(root, "device_type6");
+		cJSON* r = cJSON_GetObjectItem(root, "device_type7");
 		 if (r != NULL)
 		 {
 			 printf("r != NULL \n");
@@ -665,6 +720,18 @@ int download_os_file(char * os_path)
 	ESP_LOGI(TAG, "============  done  ===============");
 	return 0;
 }
+
+static esp_err_t ESP_Reboot_handler(httpd_req_t *req)
+{
+
+	//reboot esp
+	esp_restart();
+//httpd_resp_send_chunk
+
+   return ESP_OK;
+
+}
+
 
 
 static esp_err_t os_update_handler(httpd_req_t *req)
@@ -787,6 +854,16 @@ static const httpd_uri_t post_os_update = {
     .user_ctx  = "update now"
 };
 
+static const httpd_uri_t postESP_Reboot = {
+    .uri       = "/ESP_Reboot",
+    .method    = HTTP_POST,
+    .handler   = ESP_Reboot_handler,
+    .user_ctx  = "update now"
+};
+
+
+
+
 static const httpd_uri_t post_wifi_sta_start = {
     .uri       = "/wifi_sta_start",
     .method    = HTTP_POST,
@@ -840,6 +917,7 @@ void start_webserver(void)
         httpd_register_uri_handler(server, &ajaxfirst);
         httpd_register_uri_handler(server, &post_os_update);
         httpd_register_uri_handler(server, &post_wifi_sta_start);
+        httpd_register_uri_handler(server, &postESP_Reboot);
         //httpd_register_uri_handler(server, &up_down_but);
         httpd_register_uri_handler(server, &wifi_setting);
 

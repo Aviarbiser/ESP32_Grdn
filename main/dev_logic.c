@@ -19,11 +19,12 @@ uint8_t PID(int16_t vinput, int16_t vsetpoint);
 
 
 
+
 float  PIDintegral, PIDlastError, PIDoutputCv;
 int32_t   lastTime,prevmotorPos;
 uint16_t speed_sp ;
 
-VALVE_STD valve_parm[2];
+VALVE_STD valve_parm[4];
 
 int scen_count =0;
 
@@ -176,7 +177,9 @@ void VoltageErrorCheck()
 //DEV_EN_PIN 33 //close 1 7
 //DEV_DIRECTION_PIN 27 //open1 8
 
-int RelayOUT_Open[2] = {DEV_DIRECTION_PIN,DEV_PULSE_PIN};
+int RelayOUT_Open[4] = {OUT_R1_PIN,OUT_R2_PIN,DEV_DIRECTION_PIN,DEV_PULSE_PIN};
+int RelayOUT_Manual[4] ;
+
 int RelayOUT_Close[2] = {DEV_EN_PIN,DEV_BRAKE_PIN};
 void CheckIfTime(int Index)
 {
@@ -209,6 +212,12 @@ void CheckIfTime(int Index)
 		minindayos = 0;
 	}
 
+	if(RelayOUT_Manual[Index] == 1)
+	{
+		WriteToDigital(RelayOUT_Open[Index],1);
+		return;
+	}
+
 
 	//check if time in first time sp
 	if( (mininday >= valve_parm[Index].hour_parm[Dayw].StartHour1 ) && (mininday < (valve_parm[Index].hour_parm[Dayw].StartHour1+valve_parm[Index].hour_parm[Dayw].Duration1) ) )
@@ -218,8 +227,8 @@ void CheckIfTime(int Index)
 			valve_parm[Index].timeselect = 1;
 			//open valve
 			WriteToDigital(RelayOUT_Open[Index],1);
-			vTaskDelay(10);
-			WriteToDigital(RelayOUT_Open[Index],0);
+		//	vTaskDelay(10);
+		//	WriteToDigital(RelayOUT_Open[Index],0);
 			printf("Time loop R%d out = 1 1 \n ",RelayOUT_Open[Index]);
 			//set position angle (in shutter)
 		}
@@ -229,10 +238,11 @@ void CheckIfTime(int Index)
 		if(valve_parm[Index].timeselect == 1)
 		{
 			valve_parm[Index].timeselect = 0;
+			WriteToDigital(RelayOUT_Open[Index],0);
 			//close valve
-			WriteToDigital(RelayOUT_Close[Index],1);
-			vTaskDelay(10);
-			WriteToDigital(RelayOUT_Close[Index],0);
+		//	WriteToDigital(RelayOUT_Close[Index],1);
+		//	vTaskDelay(10);
+		//	WriteToDigital(RelayOUT_Close[Index],0);
 			printf("Time loop R%d out = 0 1 \n ",RelayOUT_Close[Index]);
 		}
 	}
@@ -244,8 +254,8 @@ void CheckIfTime(int Index)
 			valve_parm[Index].timeselect = 2;
 			//open valve
 			WriteToDigital(RelayOUT_Open[Index],1);
-			vTaskDelay(10);
-			WriteToDigital(RelayOUT_Open[Index],0);
+		//	vTaskDelay(10);
+		//	WriteToDigital(RelayOUT_Open[Index],0);
 			printf("Time loop R%d out = 1 2 \n ",RelayOUT_Open[Index]);
 		}
 			//set position angle (in shutter)
@@ -256,9 +266,10 @@ void CheckIfTime(int Index)
 		{
 			valve_parm[Index].timeselect = 0;
 			//close valve
-			WriteToDigital(RelayOUT_Close[Index],1);
-			vTaskDelay(10);
-			WriteToDigital(RelayOUT_Close[Index],0);
+			WriteToDigital(RelayOUT_Open[Index],0);
+		//	WriteToDigital(RelayOUT_Close[Index],1);
+		//	vTaskDelay(10);
+		//	WriteToDigital(RelayOUT_Close[Index],0);
 			printf("Time loop R%d out = 0 2 \n ",RelayOUT_Close[Index]);
 		}
 	}
@@ -270,8 +281,8 @@ void CheckIfTime(int Index)
 			valve_parm[Index].timeselect = 3;
 			//open valve
 			WriteToDigital(RelayOUT_Open[Index],1);
-			vTaskDelay(10);
-			WriteToDigital(RelayOUT_Open[Index],0);
+		//	vTaskDelay(10);
+		//	WriteToDigital(RelayOUT_Open[Index],0);
 			printf("Time loop R%d out = 1 3 \n ",RelayOUT_Open[Index]);
 		}
 		//set position angle (in shutter)
@@ -282,9 +293,10 @@ void CheckIfTime(int Index)
 		{
 			valve_parm[Index].timeselect = 0;
 			//close valve
-			WriteToDigital(RelayOUT_Close[Index],1);
-			vTaskDelay(10);
-			WriteToDigital(RelayOUT_Close[Index],0);
+			WriteToDigital(RelayOUT_Open[Index],0);
+	//		WriteToDigital(RelayOUT_Close[Index],1);
+	//		vTaskDelay(10);
+	//		WriteToDigital(RelayOUT_Close[Index],0);
 			printf("Time loop R%d out = 0 3 \n ",RelayOUT_Close[Index]);
 		}
 	}
@@ -304,6 +316,8 @@ void logic_loop()
 	//{
 		CheckIfTime(0);
 		CheckIfTime(1);
+		CheckIfTime(2);
+		CheckIfTime(3);
 //	}
 }
 

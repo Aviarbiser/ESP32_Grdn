@@ -5,7 +5,7 @@
 
 
 #define DEVICE_VERSION 1
-#define SUB_VERSION 4
+#define SUB_VERSION 5
 
 // Helper macros
 #define INT16_FROM_BUFF(buff, index) ((int16_t)(((uint16_t)buff[index]) | ((uint16_t)buff[index+1] << 0x08)))

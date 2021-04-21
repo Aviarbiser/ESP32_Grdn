@@ -83,7 +83,20 @@ div.status_div{
 		xmlhttp.open("POST", "/os_update", true);
 		xmlhttp.send();
 	}
-	
+
+	function Reboot_click()
+	{
+	debugger;
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function () {
+            if ((this.readyState == XMLHttpRequest.DONE) && (xmlhttp.status == 200)) {
+               
+			}
+			
+        };
+		xmlhttp.open("POST", "/ESP_Reboot", true);
+		xmlhttp.send();
+	}	
 	
 
 	function wifi_start_sta()
@@ -453,8 +466,132 @@ debugger;
 				<td ><input  size="10"  id="Duration2_3_6" type="text" value="XXX" /></label> </td>
 				<td ><input  size="10"  id="Duration2_3_7" type="text" value="XXX" /></label> </td>
             </tr>            
-            
-            
+ 			<tr >
+				<td height="45" colspan="8" ><b><label >Times for valve 3</label></b> </td>
+			</tr>
+            <tr >
+				<td ><label style = "width:100;" >Start Hour 1</label> </td>
+				<td ><label><input  size="10"  id="StartHour3_1_1" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour3_1_2" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour3_1_3" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour3_1_4" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour3_1_5" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour3_1_6" type="text" value="XXX" /></label></label></td>
+				<td ><label><input  size="10"  id="StartHour3_1_7" type="text" value="XXX" /></label></label></td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Duration 1</label> </td>
+				<td ><input  size="10"  id="Duration3_1_1" type="text" value="XXX" /></input></td>	
+				<td ><input  size="10"  id="Duration3_1_2" type="text" value="XXX" /></input> </td>	
+				<td ><input  size="10"  id="Duration3_1_3" type="text" value="XXX" /></input></td>	
+				<td ><input  size="10"  id="Duration3_1_4" type="text" value="XXX" /></input> </td>	
+				<td ><input  size="10"  id="Duration3_1_5" type="text" value="XXX" /></input></td>	
+				<td ><input  size="10"  id="Duration3_1_6" type="text" value="XXX" /></label> </td>	
+				<td ><input  size="10"  id="Duration3_1_7" type="text" value="XXX" /></label> </td>	
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Start Hour 2</label> </td>
+				<td ><input  size="10"  id="StartHour3_2_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour3_2_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour3_2_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour3_2_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour3_2_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour3_2_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="StartHour3_2_7" type="text" value="XXX" /></label> </td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Duration 2</label> </td>
+				<td ><input  size="10"  id="Duration3_2_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration3_2_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration3_2_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration3_2_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration3_2_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration3_2_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="Duration3_2_7" type="text" value="XXX" /></label> </td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Start Hour 3</label> </td>
+				<td ><input  size="10"  id="StartHour3_3_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour3_3_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour3_3_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour3_3_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour3_3_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour3_3_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="StartHour3_3_7" type="text" value="XXX" /></label> </td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Duration 3</label> </td>
+				<td ><input  size="10"  id="Duration3_3_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration3_3_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration3_3_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration3_3_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration3_3_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration3_3_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="Duration3_3_7" type="text" value="XXX" /></label> </td>
+            </tr>                   
+            			<tr >
+				<td height="45" colspan="8" ><b><label >Times for valve 4</label></b> </td>
+			</tr>
+            <tr >
+				<td ><label style = "width:100;" >Start Hour 1</label> </td>
+				<td ><label><input  size="10"  id="StartHour4_1_1" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour4_1_2" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour4_1_3" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour4_1_4" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour4_1_5" type="text" value="XXX" /></input></label></td>
+				<td ><label><input  size="10"  id="StartHour4_1_6" type="text" value="XXX" /></label></label></td>
+				<td ><label><input  size="10"  id="StartHour4_1_7" type="text" value="XXX" /></label></label></td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Duration 1</label> </td>
+				<td ><input  size="10"  id="Duration4_1_1" type="text" value="XXX" /></input></td>	
+				<td ><input  size="10"  id="Duration4_1_2" type="text" value="XXX" /></input> </td>	
+				<td ><input  size="10"  id="Duration4_1_3" type="text" value="XXX" /></input></td>	
+				<td ><input  size="10"  id="Duration4_1_4" type="text" value="XXX" /></input> </td>	
+				<td ><input  size="10"  id="Duration4_1_5" type="text" value="XXX" /></input></td>	
+				<td ><input  size="10"  id="Duration4_1_6" type="text" value="XXX" /></label> </td>	
+				<td ><input  size="10"  id="Duration4_1_7" type="text" value="XXX" /></label> </td>	
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Start Hour 2</label> </td>
+				<td ><input  size="10"  id="StartHour4_2_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour4_2_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour4_2_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour4_2_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour4_2_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour4_2_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="StartHour4_2_7" type="text" value="XXX" /></label> </td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Duration 2</label> </td>
+				<td ><input  size="10"  id="Duration4_2_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration4_2_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration4_2_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration4_2_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration4_2_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration4_2_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="Duration4_2_7" type="text" value="XXX" /></label> </td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Start Hour 3</label> </td>
+				<td ><input  size="10"  id="StartHour4_3_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour4_3_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour4_3_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour4_3_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="StartHour4_3_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="StartHour4_3_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="StartHour4_3_7" type="text" value="XXX" /></label> </td>
+            </tr>
+            <tr>
+				<td style = "width:100;"><label >Duration 3</label> </td>
+				<td ><input  size="10"  id="Duration4_3_1" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration4_3_2" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration4_3_3" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration4_3_4" type="text" value="XXX" /></input> </td>
+				<td ><input  size="10"  id="Duration4_3_5" type="text" value="XXX" /></input></td>
+				<td ><input  size="10"  id="Duration4_3_6" type="text" value="XXX" /></label> </td>
+				<td ><input  size="10"  id="Duration4_3_7" type="text" value="XXX" /></label> </td>
+            </tr>        
             
             <tr>
 				<td colspan="8" height="30">
@@ -477,13 +614,14 @@ debugger;
 				<td><label for="ssid">SSID</label></td>
 				<td ><input id=ssid /></td>
 				<td width="200"></td>
+				<td width="10"><input class="OS_update" type="button" onclick="OS_Update()" value="Check for update" /></td>
             </tr>
             <tr>
 				<td><label for="password">Password</label></td>
 				<td ><input id=password /></td>
 				
 				<td width="130"></td>
-				<td width="10"><input class="OS_update" type="button" onclick="OS_Update()" value="Check for update" /></td>
+				<td width="10"><input class="OS_update" type="button" onclick="Reboot_click()" value="Reboot" /></td>
             </tr>
 			<tr>
 				<td width="10"><input class="OS_update" type="button" onclick="save_wifi_settings()" value="Save WIFI" /></td>

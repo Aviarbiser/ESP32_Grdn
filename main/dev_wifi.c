@@ -14,6 +14,7 @@
 #include "esp_log.h"
 #include "nvs_flash.h"
 #include "dev_time.h"
+#include "mdns.h"
 
 #include "dev_web_server.h"
 
@@ -26,9 +27,13 @@
 #define EXAMPLE_ESP_MAXIMUM_RETRY  3
 
 #define AP_WIFI_SSID      "ESP_bcddc2c1b2b9"
-#define AP_WIFI_PASS      "Arbicom1234"
+#define AP_WIFI_PASS      "esp123!@#"
 #define AP_MAX_STA_CONN  2
 extern uint8_t DeviceMAC[6];
+
+
+ //mdns_server_t * mdns = NULL;
+
 
 WIFI_PARM_STD wifi_station_parm;
 
@@ -87,6 +92,23 @@ WIFI_STATUS_STD wifi_status;
 
 }
 
+ static void start_mdns_service()
+ {
+     //initialize mDNS service on STA interface
+     /*esp_err_t err = mdns_init(TCPIP_ADAPTER_IF_STA, &mdns);
+     if (err) {
+         printf("MDNS Init failed: %d\n", err);
+         return;
+     }
+	*/
+	 esp_err_t mdns_init();
+     //set hostname  mdns
+	 mdns_hostname_set("hostname");
+	 mdns_instance_name_set("ESP32");
+
+     printf("MDNS Init ok ");
+ }
+
 static void event_handler(void* arg, esp_event_base_t event_base,
                                 int32_t event_id, void* event_data)
 {
@@ -102,6 +124,7 @@ static void event_handler(void* arg, esp_event_base_t event_base,
         else
         {
         	//cano't connect to AP open ESP in AP mode
+
         	init_wifi_ap();
         }
         ESP_LOGI(TAG,"connect to the AP fail");
@@ -118,7 +141,7 @@ static void event_handler(void* arg, esp_event_base_t event_base,
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
         //start http server
        // webserver_init();
-
+        start_mdns_service();
         start_webserver();
         init_time();
         printf(" start_webserver STA\n");

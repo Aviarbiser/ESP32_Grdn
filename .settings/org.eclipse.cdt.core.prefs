@@ -3,7 +3,7 @@ environment/project/cdt.managedbuild.toolchain.gnu.cross.base.288802259/BATCH_BU
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.288802259/BATCH_BUILD/operation=append
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.288802259/BATCH_BUILD/value=1
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.288802259/IDF_PATH/delimiter=;
-environment/project/cdt.managedbuild.toolchain.gnu.cross.base.288802259/IDF_PATH/operation=append
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.288802259/IDF_PATH/operation=replace
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.288802259/IDF_PATH/value=C\:\\msys32\\home\\AviahiArbiser\\esp\\esp-idf
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.288802259/PATH/delimiter=;
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.288802259/PATH/operation=replace

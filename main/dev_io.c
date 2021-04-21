@@ -185,26 +185,19 @@ void IO_loop()
 	if ( gpio_get_level(IN2_PIN) != IN2)
 	{
 
-	/*	IN2 = gpio_get_level(IN2_PIN);
+		IN2 = gpio_get_level(IN2_PIN);
 		printf(" WriteToDigital R2 %d  \n", IN2);
 		//WriteToDigital(OUT_R2_PIN,IN2);
 		if(IN2==0){
-
-			motor_status =E_S_ONLINE;//E_S_WAKEUP;//
-			motor_memory.DataValid = 99;
-			printf(" Motor go direction %d , Speed %d \n", 1, 50);
-
-			 motion_step = E_MOTION_SPEED;
-			 go_by_speed_direction = 0;
-			 go_by_speed_speed_sp = 10;
+			printf("OUT 1 on \n");
+			RelayOUT_Manual[0] = 1;
 		}
 		else
 		{
-			printf(" io stop \n");
-			stop();
-			motion_step = E_DONE;
+			printf("OUT 1 off \n");
+			RelayOUT_Manual[0] = 0;
 		}
-		*/
+
 	}
 
 
@@ -215,42 +208,32 @@ void IO_loop()
 		if(shutter_pulse==0){
 
 			//motor_status =E_S_ONLINE;//E_S_WAKEUP;//
-			//motor_memory.DataValid = 99;
-			//last_valid_connection = xTaskGetTickCount();
-
-
-			printf(" Motor go direction %d , Speed %d \n", 1, 200);
-
+			printf("OUT 2 on \n");
+			RelayOUT_Manual[1] = 1;
 		}
 		else
 		{
-			printf(" io stop \n");
-
+			printf("OUT 2 off \n");
+			RelayOUT_Manual[1] = 0;
 		}
 	}
 
 
 	if ( gpio_get_level(IN1_PIN) != IN1)
 	{
-/*
+
 		IN1 = gpio_get_level(IN1_PIN);
 		if(IN1==0){
 
-			motor_status =E_S_ONLINE;//E_S_WAKEUP;//
-			motor_memory.DataValid = 99;
-			printf(" Motor go direction %d , Speed %d \n", 1, 50);
-
-			 motion_step = E_MOTION_SPEED;
-			 go_by_speed_direction = 1;
-			 go_by_speed_speed_sp = 50;
+			printf("OUT 3 on \n");
+			RelayOUT_Manual[2] = 1;
 		}
 		else
 		{
-			printf(" io stop \n");
-			stop();
-			motion_step = E_DONE;
+			printf("OUT 3 off \n");
+			RelayOUT_Manual[2] = 1;
 		}
-		*/
+
 	}
 
 
@@ -262,12 +245,13 @@ void IO_loop()
 			IN3 = gpio_get_level(IN3_PIN);
 			if(IN3==0){
 
-
+				printf("OUT 4 on \n");
+				RelayOUT_Manual[3] = 1;
 			}
 			else
 			{
-				//motor_status = E_S_ONLINE;
-
+				printf("OUT 4 off \n");
+				RelayOUT_Manual[3] = 0;
 			}
 		}
 

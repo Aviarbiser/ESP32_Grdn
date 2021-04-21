@@ -149,6 +149,7 @@ dev_wifi.o: \
  C:/msys32/home/AviahiArbiser/esp/esp-idf/components/soc/include/soc/dac_periph.h \
  C:/msys32/home/AviahiArbiser/esp/esp-idf/components/soc/esp32/include/soc/dac_channel.h \
  C:/msys32/home/AviahiArbiser/esp/esp-idf/components/newlib/include/math.h \
+ C:/msys32/home/AviahiArbiser/esp/esp-idf/components/mdns/include/mdns.h \
  C:/msys32/home/AviahiArbiser/esp/esp32_Grdn/ESP32_Grdn/main/dev_web_server.h \
  C:/msys32/home/AviahiArbiser/esp/esp-idf/components/lwip/lwip/src/include/lwip/err.h \
  C:/msys32/home/AviahiArbiser/esp/esp-idf/components/lwip/lwip/src/include/lwip/sys.h \
@@ -451,6 +452,8 @@ C:/msys32/home/AviahiArbiser/esp/esp-idf/components/soc/include/soc/dac_periph.h
 C:/msys32/home/AviahiArbiser/esp/esp-idf/components/soc/esp32/include/soc/dac_channel.h:
 
 C:/msys32/home/AviahiArbiser/esp/esp-idf/components/newlib/include/math.h:
+
+C:/msys32/home/AviahiArbiser/esp/esp-idf/components/mdns/include/mdns.h:
 
 C:/msys32/home/AviahiArbiser/esp/esp32_Grdn/ESP32_Grdn/main/dev_web_server.h:
 

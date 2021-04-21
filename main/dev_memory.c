@@ -56,8 +56,8 @@ void memory_init()
 
 	// Read run time blob
 	size_t required_size;
-	uint8_t* hourArray = malloc(sizeof(VALVE_STD)*2);
-	required_size = sizeof(VALVE_STD)*2;
+	uint8_t* hourArray = malloc(sizeof(VALVE_STD)*4);
+	required_size = sizeof(VALVE_STD)*4;
 	// obtain required memory space to store blob being read from NVS
 	err = nvs_get_blob(my_handle, "hour_parm", hourArray, &required_size);
 	if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND)
@@ -70,7 +70,7 @@ void memory_init()
 	{
 		if(required_size > 0)
 		{
-			memcpy(&valve_parm,hourArray,sizeof(VALVE_STD)*2);
+			memcpy(&valve_parm,hourArray,sizeof(VALVE_STD)*4);
 			free(hourArray);
 		}
 	}
@@ -181,11 +181,11 @@ void SaveHoursToMemory()
 		return;
 	}
 
-	uint8_t* hourArray = malloc(sizeof(VALVE_STD)*2);
+	uint8_t* hourArray = malloc(sizeof(VALVE_STD)*4);
 
-	memcpy(hourArray ,&valve_parm,sizeof(VALVE_STD)*2);
+	memcpy(hourArray ,&valve_parm,sizeof(VALVE_STD)*4);
 
-	err = nvs_set_blob(my_handle, "hour_parm", hourArray, sizeof(VALVE_STD)*2);
+	err = nvs_set_blob(my_handle, "hour_parm", hourArray, sizeof(VALVE_STD)*4);
 
 	free(hourArray);
 

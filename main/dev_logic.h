@@ -39,14 +39,14 @@ typedef struct
 }__attribute__((packed))VALVE_STD;
 
 
-extern VALVE_STD valve_parm[2];
+extern VALVE_STD valve_parm[4];
 
 
 
 extern double sunZenith;
 extern double sunAzimuth;
 extern uint8_t DeviceErrCount;
-
+extern int RelayOUT_Manual[4] ;
 
 
 extern int8_t position_SP ;
